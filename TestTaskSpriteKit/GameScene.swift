@@ -10,14 +10,19 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    private var background = SKSpriteNode()
+    private var background = SKNode()
+    private var paper = SKSpriteNode()
     
     override func didMove(to view: SKView) {
-        background = self.childNode(withName: "back") as! SKSpriteNode
-        background.name = "back"
+        guard let background = self.childNode(withName: "back"),
+              let paper = background.childNode(withName: "paper") as? SKSpriteNode,
+              let view = self.view else { return }
+        self.background = background
+        self.background.name = "back"
+        self.paper = paper
         
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom(_:)))
-        self.view?.addGestureRecognizer(gestureRecognizer)
+        view.addGestureRecognizer(gestureRecognizer)
     }
     
     @objc func handlePanFrom(_ recognizer : UIPanGestureRecognizer) {
@@ -46,19 +51,32 @@ class GameScene: SKScene {
     }
     
     private func boundLayerPosition(newPosition: CGPoint) -> CGPoint {
-        let winSize = self.size
-        var retval = newPosition
-        retval.x = CGFloat(min(retval.x, 0))
-        retval.x = CGFloat(max(retval.x, -(background.size.width) + winSize.width))
-        retval.y = CGFloat(min(0, retval.y))
-        retval.y = CGFloat(max(-(background.size.height) + winSize.height, retval.y))
+        let sceneSize = self.size
+        var returnValue = newPosition
+        returnValue.x = CGFloat(min(returnValue.x, 50))
+        returnValue.x = CGFloat(max(returnValue.x, -(paper.size.width) + sceneSize.width))
+        returnValue.y = CGFloat(min(0, returnValue.y))
+        returnValue.y = CGFloat(max(-(paper.size.height) + sceneSize.height, returnValue.y))
         
-        return retval
+        return returnValue
     }
     
     private func panForTranslation(translation: CGPoint) {
         let position = background.position
-        let aNewPosition = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
-        background.position = boundLayerPosition(newPosition: aNewPosition)
+        let newPosition = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
+        background.position = boundLayerPosition(newPosition: newPosition)
+    }
+    
+    private func addArrow(from: CGPoint, to: CGPoint) {
+        let arrowPath = UIBezierPath()
+        arrowPath.addArrow(start: CGPoint(x: from.x, y: from.y), end: CGPoint(x: to.x, y: to.y))
+        
+        let arrow = SKShapeNode(path: arrowPath.cgPath, centered: false)
+        arrow.position = CGPoint(x: 0, y: 0)
+        arrow.lineWidth = 5
+        arrow.strokeColor = .random
+        arrow.zPosition = 1
+        
+        background.addChild(arrow)
     }
 }
