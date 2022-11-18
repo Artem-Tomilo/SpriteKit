@@ -15,8 +15,6 @@ class VectorAddViewController: UIViewController {
     @IBOutlet weak var endXTextField: UITextField!
     @IBOutlet weak var endYTextField: UITextField!
     
-    private var sendDataButton: UIBarButtonItem?
-    
     weak var delegate: VectorAddViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -27,7 +25,7 @@ class VectorAddViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
         title = "Создание вектора"
         
-        sendDataButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonAction(_:)))
+        let sendDataButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonAction(_:)))
         navigationItem.rightBarButtonItem = sendDataButton
     }
     

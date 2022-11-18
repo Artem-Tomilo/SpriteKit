@@ -11,7 +11,12 @@ import GameplayKit
 
 class GameViewController: UIViewController {
     
+    @IBOutlet weak var tableView: UITableView?
+    @IBOutlet var tableViewShowConstraints: [NSLayoutConstraint] = []
+    @IBOutlet var tableViewHideConstraints: [NSLayoutConstraint] = []
+    
     var isDataReceived: Bool = false
+    private var istableViewShow: Bool = false
     
     private var startX, startY, endX, endY: Int?
     
@@ -30,11 +35,7 @@ class GameViewController: UIViewController {
             view.showsNodeCount = true
         }
         
-        createTransitionButton()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = true
+        navigationBarSettings()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -49,28 +50,33 @@ class GameViewController: UIViewController {
         return true
     }
     
-    private func createTransitionButton() {
-        let transitionButton = UIButton()
-        transitionButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(transitionButton)
-        
-        NSLayoutConstraint.activate([
-            transitionButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            transitionButton.widthAnchor.constraint(equalToConstant: 40),
-            transitionButton.heightAnchor.constraint(equalToConstant: 40),
-            transitionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-        ])
-        
-        transitionButton.backgroundColor = .black
-        transitionButton.layer.cornerRadius = 20
-        transitionButton.setTitle("+", for: .normal)
-        transitionButton.titleLabel?.font = UIFont.systemFont(ofSize: 30)
-        transitionButton.setTitleColor(.white, for: .normal)
-        transitionButton.titleLabel?.textAlignment = .center
-        transitionButton.addTarget(self, action: #selector(transitionToAddVectorScreen(_ :)), for: .primaryActionTriggered)
+    private func navigationBarSettings() {
+        navigationController?.navigationBar.tintColor = .black
+        let transitionButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(transitionToAddVectorScreen(_:)))
+        let showTableViewButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(showAndHideTableView(_:)))
+        navigationItem.rightBarButtonItem = transitionButton
+        navigationItem.leftBarButtonItem = showTableViewButton
     }
     
-    @objc func transitionToAddVectorScreen(_ sender: UIButton) {
+    @objc func showAndHideTableView(_ sender: UIBarButtonItem) {
+        if !istableViewShow {
+            NSLayoutConstraint.deactivate(tableViewHideConstraints)
+            NSLayoutConstraint.activate(tableViewShowConstraints)
+            UIView.animate(withDuration: 0.2) {
+                self.view.layoutIfNeeded()
+            }
+            istableViewShow = true
+        } else {
+            NSLayoutConstraint.deactivate(tableViewShowConstraints)
+            NSLayoutConstraint.activate(tableViewHideConstraints)
+            UIView.animate(withDuration: 0.2) {
+                self.view.layoutIfNeeded()
+            }
+            istableViewShow = false
+        }
+    }
+    
+    @objc func transitionToAddVectorScreen(_ sender: UIBarButtonItem) {
         let vectorViewController = storyboard?.instantiateViewController(withIdentifier: "VectorAddViewController") as! VectorAddViewController
         navigationController?.pushViewController(vectorViewController, animated: true)
         vectorViewController.delegate = self
