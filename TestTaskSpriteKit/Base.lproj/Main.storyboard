@@ -100,16 +100,6 @@
                                     <outlet property="delegate" destination="JAu-n2-BfH" id="pBl-7U-zkO"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kTC-zp-UYi">
-                                <rect key="frame" x="313" y="91" width="48" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="OK"/>
-                                <connections>
-                                    <action selector="ok:" destination="JAu-n2-BfH" eventType="primaryActionTriggered" id="YcN-C8-bBl"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Wo4-vz-pej"/>
                         <color key="backgroundColor" systemColor="systemCyanColor"/>

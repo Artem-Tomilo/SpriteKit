@@ -15,6 +15,8 @@ class VectorAddViewController: UIViewController {
     @IBOutlet weak var endXTextField: UITextField!
     @IBOutlet weak var endYTextField: UITextField!
     
+    private var sendDataButton: UIBarButtonItem?
+    
     weak var delegate: VectorAddViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -24,14 +26,23 @@ class VectorAddViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.tintColor = .black
         title = "Создание вектора"
+        
+        sendDataButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonAction(_:)))
+        navigationItem.rightBarButtonItem = sendDataButton
     }
     
-    @IBAction func ok(_ sender: UIButton) {
+    @objc func doneButtonAction(_ sender: UIBarButtonItem) {
         navigationController?.popViewController(animated: true)
-        
-        delegate?.parametersBind(startX: startXTextField.text ?? "", startY: startYTextField.text ?? "", endX: endXTextField.text ?? "", endY: endYTextField.text ?? "")
-        
-//        delegate?.addArrow(from: CGPoint(x: Int(startXTextField.text ?? "")!, y: Int(startYTextField.text ?? "")!), to: CGPoint(x: Int(endXTextField.text ?? "")!, y: Int(endYTextField.text ?? "")!))
+        parametersValidate()
+    }
+    
+    private func parametersValidate() {
+        if let startX = Int(startXTextField.text ?? ""),
+           let startY = Int(startYTextField.text ?? ""),
+           let endX = Int(endXTextField.text ?? ""),
+           let endY = Int(endYTextField.text ?? "") {
+            delegate?.parametersBind(startX: startX, startY: startY, endX: endX, endY: endY)
+        }
     }
     
 }

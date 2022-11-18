@@ -19,6 +19,7 @@
 		380598562924332000BA4F16 /* UIColor+randomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380598552924332000BA4F16 /* UIColor+randomColor.swift */; };
 		380598582924D8BF00BA4F16 /* UIBezierPath+addArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380598572924D8BF00BA4F16 /* UIBezierPath+addArrow.swift */; };
 		3805985A2924F22100BA4F16 /* VectorAddViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380598592924F22100BA4F16 /* VectorAddViewControllerDelegate.swift */; };
+		3867F954292818F100D5068C /* GameSceneProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F953292818F100D5068C /* GameSceneProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		380598552924332000BA4F16 /* UIColor+randomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+randomColor.swift"; sourceTree = "<group>"; };
 		380598572924D8BF00BA4F16 /* UIBezierPath+addArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+addArrow.swift"; sourceTree = "<group>"; };
 		380598592924F22100BA4F16 /* VectorAddViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorAddViewControllerDelegate.swift; sourceTree = "<group>"; };
+		3867F953292818F100D5068C /* GameSceneProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 				380598552924332000BA4F16 /* UIColor+randomColor.swift */,
 				380598572924D8BF00BA4F16 /* UIBezierPath+addArrow.swift */,
 				380598592924F22100BA4F16 /* VectorAddViewControllerDelegate.swift */,
+				3867F953292818F100D5068C /* GameSceneProtocol.swift */,
 			);
 			path = TestTaskSpriteKit;
 			sourceTree = "<group>";
@@ -160,6 +163,7 @@
 				38059843292103B900BA4F16 /* GameScene.swift in Sources */,
 				38059845292103B900BA4F16 /* GameViewController.swift in Sources */,
 				3805983D292103B900BA4F16 /* AppDelegate.swift in Sources */,
+				3867F954292818F100D5068C /* GameSceneProtocol.swift in Sources */,
 				380598582924D8BF00BA4F16 /* UIBezierPath+addArrow.swift in Sources */,
 				380598542923EED200BA4F16 /* VectorAddViewController.swift in Sources */,
 				380598562924332000BA4F16 /* UIColor+randomColor.swift in Sources */,

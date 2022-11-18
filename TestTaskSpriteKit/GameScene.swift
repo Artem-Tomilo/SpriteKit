@@ -10,6 +10,8 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    weak var gameSceneDelegate: GameSceneProtocol?
+    
     private var background = SKNode()
     private var paper = SKSpriteNode()
     
@@ -23,8 +25,13 @@ class GameScene: SKScene {
         
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom(_:)))
         view.addGestureRecognizer(gestureRecognizer)
-        
-//        addArrow(from: CGPoint(x: 100, y: 100), to: CGPoint(x: 300, y: 300))
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        if gameSceneDelegate?.isDataReceived == true {
+            let arrow = gameSceneDelegate?.addArrow()
+            paper.addChild(arrow!)
+        }
     }
     
     @objc func handlePanFrom(_ recognizer : UIPanGestureRecognizer) {
@@ -67,19 +74,5 @@ class GameScene: SKScene {
         let position = background.position
         let newPosition = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
         background.position = boundLayerPosition(newPosition: newPosition)
-    }
-    
-    private func addArrow(from: CGPoint, to: CGPoint) {
-        let arrowPath = UIBezierPath()
-        arrowPath.addArrow(start: CGPoint(x: from.x, y: from.y), end: CGPoint(x: to.x, y: to.y))
-        
-        let arrow = SKShapeNode(path: arrowPath.cgPath, centered: false)
-        arrow.position = CGPoint(x: 0, y: 0)
-        arrow.lineWidth = 5
-        arrow.strokeColor = .random
-        arrow.zPosition = 1
-        
-        paper.addChild(arrow)
-//        print(Double(from.x), Double(from.y),Double(to.x),Double(to.y))
     }
 }

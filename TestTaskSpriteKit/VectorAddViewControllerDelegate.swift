@@ -8,5 +8,5 @@
 import Foundation
 
 protocol VectorAddViewControllerDelegate: AnyObject {
-    func parametersBind(startX: String, startY: String, endX: String, endY: String)
+    func parametersBind(startX: Int, startY: Int, endX: Int, endY: Int)
 }
