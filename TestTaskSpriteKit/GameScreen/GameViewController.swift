@@ -15,10 +15,13 @@ class GameViewController: UIViewController {
     @IBOutlet var tableViewShowConstraints: [NSLayoutConstraint] = []
     @IBOutlet var tableViewHideConstraints: [NSLayoutConstraint] = []
     
+    private var vectorsArray = [Vector]()
+    
     var isDataReceived: Bool = false
     private var istableViewShow: Bool = false
     
     private var startX, startY, endX, endY: Int?
+    static let cellIdentifier = "cell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +39,11 @@ class GameViewController: UIViewController {
         }
         
         navigationBarSettings()
+        tableView?.register(CustomCell.self, forCellReuseIdentifier: GameViewController.cellIdentifier)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView?.reloadData()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -81,6 +89,11 @@ class GameViewController: UIViewController {
         navigationController?.pushViewController(vectorViewController, animated: true)
         vectorViewController.delegate = self
     }
+    
+    private func createVector(startPoint: CGPoint, endPoint: CGPoint) {
+        let vector = Vector(startPoint: startPoint, endPoint: endPoint)
+        vectorsArray.append(vector)
+    }
 }
 
 extension GameViewController: VectorAddViewControllerDelegate {
@@ -90,6 +103,7 @@ extension GameViewController: VectorAddViewControllerDelegate {
         self.endX = endX
         self.endY = endY
         
+        createVector(startPoint: CGPoint(x: startX, y: startY), endPoint: CGPoint(x: endX, y: endY))
         isDataReceived = true
     }
 }
@@ -108,5 +122,24 @@ extension GameViewController: GameSceneProtocol {
         
         isDataReceived = false
         return arrow
+    }
+}
+
+extension GameViewController: UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+}
+
+extension GameViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return vectorsArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: GameViewController.cellIdentifier, for: indexPath) as? CustomCell else { return UITableViewCell() }
+        cell.bindText(vector: vectorsArray[indexPath.row])
+        
+        return cell
     }
 }

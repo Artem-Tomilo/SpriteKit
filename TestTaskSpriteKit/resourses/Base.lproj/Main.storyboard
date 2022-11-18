@@ -33,19 +33,23 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R8E-RL-gRj">
-                                <rect key="frame" x="-128.66666666666666" y="0.0" width="128.66666666666666" height="844"/>
+                                <rect key="frame" x="-128.66666666666666" y="91" width="128.66666666666666" height="753"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="LED-Ls-vLR">
-                                        <rect key="frame" x="0.0" y="100" width="128.66666666666666" height="744"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="128.66666666666666" height="753"/>
                                         <color key="backgroundColor" systemColor="systemGray3Color"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="BV1-FR-VrT" id="wmq-on-S6d"/>
+                                            <outlet property="delegate" destination="BV1-FR-VrT" id="L4h-FT-GdA"/>
+                                        </connections>
                                     </tableView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="LED-Ls-vLR" firstAttribute="leading" secondItem="R8E-RL-gRj" secondAttribute="leading" id="FWC-pP-yN0"/>
-                                    <constraint firstItem="LED-Ls-vLR" firstAttribute="top" secondItem="R8E-RL-gRj" secondAttribute="top" constant="100" id="fYu-l6-auz"/>
                                     <constraint firstAttribute="bottom" secondItem="LED-Ls-vLR" secondAttribute="bottom" id="iVx-Fd-8SW"/>
                                     <constraint firstAttribute="trailing" secondItem="LED-Ls-vLR" secondAttribute="trailing" id="oys-Cu-hLy"/>
+                                    <constraint firstItem="LED-Ls-vLR" firstAttribute="top" secondItem="R8E-RL-gRj" secondAttribute="top" id="qwS-h0-NrC"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -56,7 +60,7 @@
                             <constraint firstItem="R8E-RL-gRj" firstAttribute="trailing" secondItem="3se-qz-xqx" secondAttribute="leading" id="KLk-A6-2Sg"/>
                             <constraint firstItem="R8E-RL-gRj" firstAttribute="leading" secondItem="4qk-I5-YsI" secondAttribute="leading" id="Uci-aF-U8q"/>
                             <constraint firstAttribute="bottom" secondItem="R8E-RL-gRj" secondAttribute="bottom" id="eNr-Fb-cUm"/>
-                            <constraint firstItem="R8E-RL-gRj" firstAttribute="top" secondItem="3se-qz-xqx" secondAttribute="top" id="qSg-5H-8Er"/>
+                            <constraint firstItem="R8E-RL-gRj" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" id="qSg-5H-8Er"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -181,9 +185,6 @@
         </systemColor>
         <systemColor name="systemGray3Color">
             <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
