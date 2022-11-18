@@ -18,6 +18,7 @@
 		380598542923EED200BA4F16 /* VectorAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380598532923EED200BA4F16 /* VectorAddViewController.swift */; };
 		380598562924332000BA4F16 /* UIColor+randomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380598552924332000BA4F16 /* UIColor+randomColor.swift */; };
 		380598582924D8BF00BA4F16 /* UIBezierPath+addArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380598572924D8BF00BA4F16 /* UIBezierPath+addArrow.swift */; };
+		3805985A2924F22100BA4F16 /* VectorAddViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380598592924F22100BA4F16 /* VectorAddViewControllerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		380598532923EED200BA4F16 /* VectorAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorAddViewController.swift; sourceTree = "<group>"; };
 		380598552924332000BA4F16 /* UIColor+randomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+randomColor.swift"; sourceTree = "<group>"; };
 		380598572924D8BF00BA4F16 /* UIBezierPath+addArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+addArrow.swift"; sourceTree = "<group>"; };
+		380598592924F22100BA4F16 /* VectorAddViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorAddViewControllerDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				380598532923EED200BA4F16 /* VectorAddViewController.swift */,
 				380598552924332000BA4F16 /* UIColor+randomColor.swift */,
 				380598572924D8BF00BA4F16 /* UIBezierPath+addArrow.swift */,
+				380598592924F22100BA4F16 /* VectorAddViewControllerDelegate.swift */,
 			);
 			path = TestTaskSpriteKit;
 			sourceTree = "<group>";
@@ -153,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3805985A2924F22100BA4F16 /* VectorAddViewControllerDelegate.swift in Sources */,
 				38059843292103B900BA4F16 /* GameScene.swift in Sources */,
 				38059845292103B900BA4F16 /* GameViewController.swift in Sources */,
 				3805983D292103B900BA4F16 /* AppDelegate.swift in Sources */,

@@ -23,6 +23,8 @@ class GameScene: SKScene {
         
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom(_:)))
         view.addGestureRecognizer(gestureRecognizer)
+        
+//        addArrow(from: CGPoint(x: 100, y: 100), to: CGPoint(x: 300, y: 300))
     }
     
     @objc func handlePanFrom(_ recognizer : UIPanGestureRecognizer) {
@@ -77,6 +79,7 @@ class GameScene: SKScene {
         arrow.strokeColor = .random
         arrow.zPosition = 1
         
-        background.addChild(arrow)
+        paper.addChild(arrow)
+//        print(Double(from.x), Double(from.y),Double(to.x),Double(to.y))
     }
 }

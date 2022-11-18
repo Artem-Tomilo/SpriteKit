@@ -67,7 +67,14 @@ class GameViewController: UIViewController {
     }
     
     @objc func transitionToAddVectorScreen(_ sender: UIButton) {
-        let vc = VectorAddViewController()
+        let vc = storyboard?.instantiateViewController(withIdentifier: "VectorAddViewController") as! VectorAddViewController
         navigationController?.pushViewController(vc, animated: true)
+        vc.delegate = self
+    }
+}
+
+extension GameViewController: VectorAddViewControllerDelegate {
+    func parametersBind(startX: String, startY: String, endX: String, endY: String) {
+        
     }
 }
