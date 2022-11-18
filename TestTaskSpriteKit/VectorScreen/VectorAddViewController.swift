@@ -10,12 +10,16 @@ import UIKit
 
 class VectorAddViewController: UIViewController {
     
+    //MARK: - property
+    
     @IBOutlet weak var startXTextField: UITextField!
     @IBOutlet weak var startYTextField: UITextField!
     @IBOutlet weak var endXTextField: UITextField!
     @IBOutlet weak var endYTextField: UITextField!
     
     weak var delegate: VectorAddViewControllerDelegate?
+    
+    //MARK: - vc lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,10 +33,7 @@ class VectorAddViewController: UIViewController {
         navigationItem.rightBarButtonItem = sendDataButton
     }
     
-    @objc func doneButtonAction(_ sender: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
-        parametersValidate()
-    }
+    //MARK: - private methods
     
     private func parametersValidate() {
         if let startX = Int(startXTextField.text ?? ""),
@@ -43,7 +44,15 @@ class VectorAddViewController: UIViewController {
         }
     }
     
+    //MARK: - actions
+    
+    @objc func doneButtonAction(_ sender: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
+        parametersValidate()
+    }
 }
+
+//MARK: - textFieldDelegate
 
 extension VectorAddViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

@@ -11,6 +11,8 @@ import GameplayKit
 
 class GameViewController: UIViewController {
     
+    //MARK: - property
+    
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet var tableViewShowConstraints: [NSLayoutConstraint] = []
     @IBOutlet var tableViewHideConstraints: [NSLayoutConstraint] = []
@@ -22,6 +24,8 @@ class GameViewController: UIViewController {
     
     private var startX, startY, endX, endY: Int?
     static let cellIdentifier = "cell"
+    
+    //MARK: - vc lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +62,8 @@ class GameViewController: UIViewController {
         return true
     }
     
+    //MARK: - private methods
+    
     private func navigationBarSettings() {
         navigationController?.navigationBar.tintColor = .black
         let transitionButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(transitionToAddVectorScreen(_:)))
@@ -65,6 +71,13 @@ class GameViewController: UIViewController {
         navigationItem.rightBarButtonItem = transitionButton
         navigationItem.leftBarButtonItem = showTableViewButton
     }
+    
+    private func createVector(startPoint: CGPoint, endPoint: CGPoint) {
+        let vector = Vector(startPoint: startPoint, endPoint: endPoint)
+        vectorsArray.append(vector)
+    }
+    
+    //MARK: - actions
     
     @objc func showAndHideTableView(_ sender: UIBarButtonItem) {
         if !istableViewShow {
@@ -89,12 +102,9 @@ class GameViewController: UIViewController {
         navigationController?.pushViewController(vectorViewController, animated: true)
         vectorViewController.delegate = self
     }
-    
-    private func createVector(startPoint: CGPoint, endPoint: CGPoint) {
-        let vector = Vector(startPoint: startPoint, endPoint: endPoint)
-        vectorsArray.append(vector)
-    }
 }
+
+//MARK: - vectorAddViewControllerDelegate
 
 extension GameViewController: VectorAddViewControllerDelegate {
     func parametersBind(startX: Int, startY: Int, endX: Int, endY: Int) {
@@ -107,6 +117,8 @@ extension GameViewController: VectorAddViewControllerDelegate {
         isDataReceived = true
     }
 }
+
+//MARK: - gameSceneProtocol
 
 extension GameViewController: GameSceneProtocol {
     
@@ -124,6 +136,8 @@ extension GameViewController: GameSceneProtocol {
         return arrow
     }
 }
+
+//MARK: - tableView
 
 extension GameViewController: UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {

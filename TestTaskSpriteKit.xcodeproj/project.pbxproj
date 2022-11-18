@@ -86,8 +86,8 @@
 		3867F95929283FCC00D5068C /* GameScreen */ = {
 			isa = PBXGroup;
 			children = (
-				38059842292103B900BA4F16 /* GameScene.swift */,
 				38059844292103B900BA4F16 /* GameViewController.swift */,
+				38059842292103B900BA4F16 /* GameScene.swift */,
 				3867F953292818F100D5068C /* GameSceneProtocol.swift */,
 				3867F95729282AC800D5068C /* CustomCell.swift */,
 				3805983E292103B900BA4F16 /* GameScene.sks */,

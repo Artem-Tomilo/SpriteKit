@@ -10,10 +10,14 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    //MARK: - property
+    
     weak var gameSceneDelegate: GameSceneProtocol?
     
     private var background = SKNode()
     private var paper = SKSpriteNode()
+    
+    //MARK: - scene methods
     
     override func didMove(to view: SKView) {
         guard let background = self.childNode(withName: "back"),
@@ -33,6 +37,27 @@ class GameScene: SKScene {
             paper.addChild(arrow!)
         }
     }
+    
+    //MARK: - private methods
+    
+    private func boundLayerPosition(newPosition: CGPoint) -> CGPoint {
+        let sceneSize = self.size
+        var returnValue = newPosition
+        returnValue.x = CGFloat(min(returnValue.x, 50))
+        returnValue.x = CGFloat(max(returnValue.x, -(paper.size.width) + sceneSize.width))
+        returnValue.y = CGFloat(min(0, returnValue.y))
+        returnValue.y = CGFloat(max(-(paper.size.height) + sceneSize.height, returnValue.y))
+        
+        return returnValue
+    }
+    
+    private func panForTranslation(translation: CGPoint) {
+        let position = background.position
+        let newPosition = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
+        background.position = boundLayerPosition(newPosition: newPosition)
+    }
+    
+    //MARK: - actions
     
     @objc func handlePanFrom(_ recognizer : UIPanGestureRecognizer) {
         
@@ -57,22 +82,5 @@ class GameScene: SKScene {
             moveTo.timingMode = .easeOut
             background.run(moveTo)
         }
-    }
-    
-    private func boundLayerPosition(newPosition: CGPoint) -> CGPoint {
-        let sceneSize = self.size
-        var returnValue = newPosition
-        returnValue.x = CGFloat(min(returnValue.x, 50))
-        returnValue.x = CGFloat(max(returnValue.x, -(paper.size.width) + sceneSize.width))
-        returnValue.y = CGFloat(min(0, returnValue.y))
-        returnValue.y = CGFloat(max(-(paper.size.height) + sceneSize.height, returnValue.y))
-        
-        return returnValue
-    }
-    
-    private func panForTranslation(translation: CGPoint) {
-        let position = background.position
-        let newPosition = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
-        background.position = boundLayerPosition(newPosition: newPosition)
     }
 }
