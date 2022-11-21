@@ -205,6 +205,14 @@ extension GameViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        highlightVector(indexPath: indexPath)
+    }
+    
+    private func highlightVector(indexPath: IndexPath) {
+        let arrow = getShapeNode(indexPath)
+        arrow?.lineWidth = 7
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            arrow?.lineWidth = 5
+        }
     }
 }
