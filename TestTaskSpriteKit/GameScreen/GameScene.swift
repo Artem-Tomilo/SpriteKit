@@ -34,8 +34,14 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         if gameSceneDelegate?.isDataReceived == true {
-            if let arrow = gameSceneDelegate?.addArrow(){
+            if let arrow = gameSceneDelegate?.addArrow() {
                 paper.addChild(arrow)
+            }
+        }
+        if gameSceneDelegate?.isNeededRemove == true {
+            if let arrow = gameSceneDelegate?.shapeNode {
+                paper.removeChildren(in: [arrow])
+                gameSceneDelegate?.isNeededRemove = false
             }
         }
     }

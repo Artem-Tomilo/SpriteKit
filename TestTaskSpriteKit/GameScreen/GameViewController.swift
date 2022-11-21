@@ -11,21 +11,23 @@ import GameplayKit
 
 class GameViewController: UIViewController {
     
-    //MARK: - property
+    //MARK: - private property
     
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet var tableViewShowConstraints: [NSLayoutConstraint] = []
     @IBOutlet var tableViewHideConstraints: [NSLayoutConstraint] = []
     
     private var vectorsArray = [Vector]()
-    
-    var isDataReceived: Bool = false
-    private var istableViewShow: Bool = false
-    
-    private var startX, startY, endX, endY: Int?
+    private var isTableViewShow: Bool = false
+    private var startX = 0, startY = 0, endX = 0, endY = 0
+    private var nodeName = 0
     static let cellIdentifier = "cell"
     
-    private var nodeName = 0
+    //MARK: - extension property
+    
+    var shapeNode = SKShapeNode()
+    var isDataReceived: Bool = false
+    var isNeededRemove: Bool = false
     
     //MARK: - vc lifecycle
     
@@ -74,28 +76,35 @@ class GameViewController: UIViewController {
         navigationItem.leftBarButtonItem = showTableViewButton
     }
     
-    private func createVector(startPoint: CGPoint, endPoint: CGPoint) {
-        let vector = Vector(startPoint: startPoint, endPoint: endPoint)
+    private func createPathForVector() -> UIBezierPath {
+        let arrowPath = UIBezierPath()
+        arrowPath.addArrow(start: CGPoint(x: startX, y: startY), end: CGPoint(x: endX, y: endY))
+        return arrowPath
+    }
+    
+    private func createVector(shapeNode: SKShapeNode) {
+        let vector = Vector(startPoint: CGPoint(x: startX, y: startY), endPoint: CGPoint(x: endX, y: endY), node: shapeNode)
         vectorsArray.append(vector)
+        tableView?.reloadData()
     }
     
     //MARK: - actions
     
     @objc func showAndHideTableView(_ sender: UIBarButtonItem) {
-        if !istableViewShow {
+        if !isTableViewShow {
             NSLayoutConstraint.deactivate(tableViewHideConstraints)
             NSLayoutConstraint.activate(tableViewShowConstraints)
             UIView.animate(withDuration: 0.2) {
                 self.view.layoutIfNeeded()
             }
-            istableViewShow = true
+            isTableViewShow = true
         } else {
             NSLayoutConstraint.deactivate(tableViewShowConstraints)
             NSLayoutConstraint.activate(tableViewHideConstraints)
             UIView.animate(withDuration: 0.2) {
                 self.view.layoutIfNeeded()
             }
-            istableViewShow = false
+            isTableViewShow = false
         }
     }
     
@@ -115,7 +124,6 @@ extension GameViewController: VectorAddViewControllerDelegate {
         self.endX = endX
         self.endY = endY
         
-        createVector(startPoint: CGPoint(x: startX, y: startY), endPoint: CGPoint(x: endX, y: endY))
         isDataReceived = true
     }
 }
@@ -125,15 +133,13 @@ extension GameViewController: VectorAddViewControllerDelegate {
 extension GameViewController: GameSceneProtocol {
     
     func addArrow() -> SKShapeNode {
-        let arrowPath = UIBezierPath()
-        arrowPath.addArrow(start: CGPoint(x: startX ?? 0, y: startY ?? 0), end: CGPoint(x: endX ?? 0, y: endY ?? 0))
-        
-        let arrow = SKShapeNode(path: arrowPath.cgPath, centered: false)
+        let arrow = SKShapeNode(path: createPathForVector().cgPath, centered: false)
         arrow.position = CGPoint(x: 0, y: 0)
         arrow.lineWidth = 5
         arrow.strokeColor = .random
         arrow.zPosition = 1
         arrow.name = String(nodeName)
+        createVector(shapeNode: arrow)
         nodeName += 1
         isDataReceived = false
         return arrow
@@ -156,7 +162,6 @@ extension GameViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GameViewController.cellIdentifier, for: indexPath) as? CustomCell else { return UITableViewCell() }
         cell.bindText(vector: vectorsArray[indexPath.row])
-        cell.tag = nodeName
         
         return cell
     }
@@ -164,18 +169,22 @@ extension GameViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteCell = UIContextualAction(style: .destructive, title: "Удалить") { [weak self] _, _, close in
             guard let self = self else { return }
-            self.showDeleteAlert(indexPath: indexPath)
+            if let shapeNode = self.getShapeNode(indexPath) {
+                self.shapeNode = shapeNode
+                self.deleteVector(indexPath: indexPath, shapeNode: shapeNode)
+            }
         }
         return UISwipeActionsConfiguration(actions: [
             deleteCell
         ])
     }
     
-    private func showDeleteAlert(indexPath: IndexPath) {
+    private func deleteVector(indexPath: IndexPath, shapeNode: SKShapeNode) {
         let alert = UIAlertController(title: "Хотите удалить данный вектор?", message: "", preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
             guard let self = self else { return }
-            self.vectorsArray.remove(at: indexPath.row)
+            self.isNeededRemove = true
+            self.vectorsArray.removeAll(where: { $0.node == shapeNode })
             self.tableView?.performBatchUpdates {
                 self.tableView?.deleteRows(at: [indexPath], with: .automatic)
             } completion: { _ in
@@ -186,6 +195,13 @@ extension GameViewController: UITableViewDataSource {
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
         self.present(alert, animated: true)
+    }
+    
+    private func getShapeNode(_ indexPath: IndexPath) -> SKShapeNode? {
+        if vectorsArray.count > indexPath.row {
+            return vectorsArray[indexPath.row].node
+        }
+        return nil
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
