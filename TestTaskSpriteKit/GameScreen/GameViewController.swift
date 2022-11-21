@@ -25,6 +25,8 @@ class GameViewController: UIViewController {
     private var startX, startY, endX, endY: Int?
     static let cellIdentifier = "cell"
     
+    private var nodeName = 0
+    
     //MARK: - vc lifecycle
     
     override func viewDidLoad() {
@@ -131,7 +133,8 @@ extension GameViewController: GameSceneProtocol {
         arrow.lineWidth = 5
         arrow.strokeColor = .random
         arrow.zPosition = 1
-        
+        arrow.name = String(nodeName)
+        nodeName += 1
         isDataReceived = false
         return arrow
     }
@@ -153,7 +156,39 @@ extension GameViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GameViewController.cellIdentifier, for: indexPath) as? CustomCell else { return UITableViewCell() }
         cell.bindText(vector: vectorsArray[indexPath.row])
+        cell.tag = nodeName
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteCell = UIContextualAction(style: .destructive, title: "Удалить") { [weak self] _, _, close in
+            guard let self = self else { return }
+            self.showDeleteAlert(indexPath: indexPath)
+        }
+        return UISwipeActionsConfiguration(actions: [
+            deleteCell
+        ])
+    }
+    
+    private func showDeleteAlert(indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Хотите удалить данный вектор?", message: "", preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+            guard let self = self else { return }
+            self.vectorsArray.remove(at: indexPath.row)
+            self.tableView?.performBatchUpdates {
+                self.tableView?.deleteRows(at: [indexPath], with: .automatic)
+            } completion: { _ in
+                self.tableView?.reloadData()
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Отменить", style: .cancel)
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
 }

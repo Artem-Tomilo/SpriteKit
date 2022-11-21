@@ -29,12 +29,14 @@ class GameScene: SKScene {
         
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom(_:)))
         view.addGestureRecognizer(gestureRecognizer)
+        gestureRecognizer.delegate = self
     }
     
     override func update(_ currentTime: TimeInterval) {
         if gameSceneDelegate?.isDataReceived == true {
-            let arrow = gameSceneDelegate?.addArrow()
-            paper.addChild(arrow!)
+            if let arrow = gameSceneDelegate?.addArrow(){
+                paper.addChild(arrow)
+            }
         }
     }
     
@@ -82,5 +84,11 @@ class GameScene: SKScene {
             moveTo.timingMode = .easeOut
             background.run(moveTo)
         }
+    }
+}
+
+extension GameScene: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

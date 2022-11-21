@@ -25,14 +25,16 @@ class CustomCell: UITableViewCell {
         addSubview(label)
         
         NSLayoutConstraint.activate([
-            label.widthAnchor.constraint(equalTo: widthAnchor),
-            label.heightAnchor.constraint(equalTo: heightAnchor, constant: -5)
+            label.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
+            label.leadingAnchor.constraint(equalTo: leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
         
         label.backgroundColor = .systemCyan
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 0
-        backgroundColor = .clear
+        backgroundColor = .systemCyan
     }
     
     func bindText(vector: Vector) {
