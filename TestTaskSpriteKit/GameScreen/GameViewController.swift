@@ -83,9 +83,16 @@ class GameViewController: UIViewController {
     }
     
     private func createVector(shapeNode: SKShapeNode) {
-        let vector = Vector(startPoint: CGPoint(x: startX, y: startY), endPoint: CGPoint(x: endX, y: endY), node: shapeNode)
+        let vector = Vector(startPoint: CGPoint(x: startX, y: startY), endPoint: CGPoint(x: endX, y: endY), node: shapeNode, lenght: calculateVectorLength())
         vectorsArray.append(vector)
         tableView?.reloadData()
+    }
+    
+    private func calculateVectorLength() -> Double {
+        let coordinateX = Double(endX - startX)
+        let coordinateY = Double(endY - startY)
+        let lenghtVector = sqrt(coordinateX * coordinateX + coordinateY * coordinateY)
+        return lenghtVector
     }
     
     //MARK: - actions

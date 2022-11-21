@@ -12,5 +12,5 @@ struct Vector {
     var startPoint: CGPoint
     var endPoint: CGPoint
     var node: SKShapeNode
-//    var lenght: Int
+    var lenght: Double
 }
