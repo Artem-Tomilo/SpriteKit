@@ -11,7 +11,7 @@ import GameplayKit
 
 class GameViewController: UIViewController {
     
-    //MARK: - private property
+    //MARK: - property
     
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet var tableViewShowConstraints: [NSLayoutConstraint] = []
@@ -19,15 +19,10 @@ class GameViewController: UIViewController {
     
     private var vectorsArray = [Vector]()
     private var isTableViewShow: Bool = false
+    var isDataReceived: Bool = false
     private var startX = 0, startY = 0, endX = 0, endY = 0
     private var nodeName = 0
     static let cellIdentifier = "cell"
-    
-    //MARK: - extension property
-    
-    var shapeNode = SKShapeNode()
-    var isDataReceived: Bool = false
-    var isNeededRemove: Bool = false
     
     //MARK: - vc lifecycle
     
@@ -177,7 +172,6 @@ extension GameViewController: UITableViewDataSource {
         let deleteCell = UIContextualAction(style: .destructive, title: "Удалить") { [weak self] _, _, close in
             guard let self = self else { return }
             if let shapeNode = self.getShapeNode(indexPath) {
-                self.shapeNode = shapeNode
                 self.deleteVector(indexPath: indexPath, shapeNode: shapeNode)
             }
         }
@@ -190,8 +184,8 @@ extension GameViewController: UITableViewDataSource {
         let alert = UIAlertController(title: "Хотите удалить данный вектор?", message: "", preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
             guard let self = self else { return }
-            self.isNeededRemove = true
             self.vectorsArray.removeAll(where: { $0.node == shapeNode })
+            shapeNode.removeFromParent()
             self.tableView?.performBatchUpdates {
                 self.tableView?.deleteRows(at: [indexPath], with: .automatic)
             } completion: { _ in

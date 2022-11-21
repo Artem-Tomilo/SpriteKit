@@ -15,17 +15,17 @@ class GameScene: SKScene {
     weak var gameSceneDelegate: GameSceneProtocol?
     
     private var background = SKNode()
-    private var paper = SKSpriteNode()
+    private var paperNode = SKSpriteNode()
     
     //MARK: - scene methods
     
     override func didMove(to view: SKView) {
         guard let background = self.childNode(withName: "back"),
-              let paper = background.childNode(withName: "paper") as? SKSpriteNode,
+              let paperNode = background.childNode(withName: "paper") as? SKSpriteNode,
               let view = self.view else { return }
         self.background = background
         self.background.name = "back"
-        self.paper = paper
+        self.paperNode = paperNode
         
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom(_:)))
         view.addGestureRecognizer(gestureRecognizer)
@@ -35,13 +35,7 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
         if gameSceneDelegate?.isDataReceived == true {
             if let arrow = gameSceneDelegate?.addArrow() {
-                paper.addChild(arrow)
-            }
-        }
-        if gameSceneDelegate?.isNeededRemove == true {
-            if let arrow = gameSceneDelegate?.shapeNode {
-                paper.removeChildren(in: [arrow])
-                gameSceneDelegate?.isNeededRemove = false
+                paperNode.addChild(arrow)
             }
         }
     }
@@ -52,9 +46,9 @@ class GameScene: SKScene {
         let sceneSize = self.size
         var returnValue = newPosition
         returnValue.x = CGFloat(min(returnValue.x, 50))
-        returnValue.x = CGFloat(max(returnValue.x, -(paper.size.width) + sceneSize.width))
+        returnValue.x = CGFloat(max(returnValue.x, -(paperNode.size.width) + sceneSize.width))
         returnValue.y = CGFloat(min(0, returnValue.y))
-        returnValue.y = CGFloat(max(-(paper.size.height) + sceneSize.height, returnValue.y))
+        returnValue.y = CGFloat(max(-(paperNode.size.height) + sceneSize.height, returnValue.y))
         
         return returnValue
     }
