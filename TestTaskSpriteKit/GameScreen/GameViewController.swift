@@ -90,6 +90,39 @@ class GameViewController: UIViewController {
         return lenghtVector
     }
     
+    private func getShapeNode(_ indexPath: IndexPath) -> SKShapeNode? {
+        if vectorsArray.count > indexPath.row {
+            return vectorsArray[indexPath.row].node
+        }
+        return nil
+    }
+    
+    private func highlightVector(indexPath: IndexPath) {
+        let arrow = getShapeNode(indexPath)
+        arrow?.lineWidth = 7
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            arrow?.lineWidth = 5
+        }
+    }
+    
+    private func deleteVector(indexPath: IndexPath, shapeNode: SKShapeNode) {
+        let alert = UIAlertController(title: "Хотите удалить данный вектор?", message: "", preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+            guard let self = self else { return }
+            self.vectorsArray.removeAll(where: { $0.node == shapeNode })
+            shapeNode.removeFromParent()
+            self.tableView?.performBatchUpdates {
+                self.tableView?.deleteRows(at: [indexPath], with: .automatic)
+            } completion: { _ in
+                self.tableView?.reloadData()
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Отменить", style: .cancel)
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true)
+    }
+    
     //MARK: - actions
     
     @objc func showAndHideTableView(_ sender: UIBarButtonItem) {
@@ -180,40 +213,7 @@ extension GameViewController: UITableViewDataSource {
         ])
     }
     
-    private func deleteVector(indexPath: IndexPath, shapeNode: SKShapeNode) {
-        let alert = UIAlertController(title: "Хотите удалить данный вектор?", message: "", preferredStyle: .actionSheet)
-        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
-            guard let self = self else { return }
-            self.vectorsArray.removeAll(where: { $0.node == shapeNode })
-            shapeNode.removeFromParent()
-            self.tableView?.performBatchUpdates {
-                self.tableView?.deleteRows(at: [indexPath], with: .automatic)
-            } completion: { _ in
-                self.tableView?.reloadData()
-            }
-        }
-        let cancelAction = UIAlertAction(title: "Отменить", style: .cancel)
-        alert.addAction(deleteAction)
-        alert.addAction(cancelAction)
-        self.present(alert, animated: true)
-    }
-    
-    private func getShapeNode(_ indexPath: IndexPath) -> SKShapeNode? {
-        if vectorsArray.count > indexPath.row {
-            return vectorsArray[indexPath.row].node
-        }
-        return nil
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         highlightVector(indexPath: indexPath)
-    }
-    
-    private func highlightVector(indexPath: IndexPath) {
-        let arrow = getShapeNode(indexPath)
-        arrow?.lineWidth = 7
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-            arrow?.lineWidth = 5
-        }
     }
 }

@@ -21,20 +21,16 @@ class CustomCell: UITableViewCell {
     
     private func setup() {
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         addSubview(label)
         
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-            label.leadingAnchor.constraint(equalTo: leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: trailingAnchor)
+            label.widthAnchor.constraint(equalTo: widthAnchor),
+            label.heightAnchor.constraint(equalTo: heightAnchor)
         ])
         
         label.backgroundColor = .systemCyan
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 0
-        backgroundColor = .systemCyan
     }
     
     func bindText(vector: Vector) {
@@ -44,5 +40,12 @@ class CustomCell: UITableViewCell {
                       B (\(Int(vector.endPoint.x)); \(Int(vector.endPoint.y)))
                       Lenght = \(stringLenght)
                     """
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        label.backgroundColor = {
+            selected ? .systemYellow :  .systemCyan
+        }()
     }
 }
