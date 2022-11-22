@@ -16,6 +16,8 @@ class GameScene: SKScene {
     
     private var background = SKNode()
     private var paperNode = SKSpriteNode()
+    private var selectedNode: SKNode?
+    private var isCanBeEdited = false
     
     //MARK: - scene methods
     
@@ -27,9 +29,13 @@ class GameScene: SKScene {
         self.background.name = "back"
         self.paperNode = paperNode
         
-        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom(_:)))
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         view.addGestureRecognizer(gestureRecognizer)
         gestureRecognizer.delegate = self
+        
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(longGestureAction(_:)))
+        view.addGestureRecognizer(longGesture)
+        longGesture.delegate = self
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -54,22 +60,31 @@ class GameScene: SKScene {
     }
     
     private func panForTranslation(translation: CGPoint) {
-        let position = background.position
-        let newPosition = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
-        background.position = boundLayerPosition(newPosition: newPosition)
+        let backgroundPosition = background.position
+        let selectedNodePosition = selectedNode?.position
+        
+        if selectedNode?.name != "paper" && isCanBeEdited == true {
+            selectedNode?.position = CGPoint(x: selectedNodePosition!.x + translation.x, y: selectedNodePosition!.y + translation.y)
+        } else {
+            let newPosition = CGPoint(x: backgroundPosition.x + translation.x, y: backgroundPosition.y + translation.y)
+            background.position = boundLayerPosition(newPosition: newPosition)
+        }
     }
     
     //MARK: - actions
     
-    @objc func handlePanFrom(_ recognizer : UIPanGestureRecognizer) {
-        
-        if recognizer.state == .changed {
+    @objc func panGestureAction(_ recognizer : UIPanGestureRecognizer) {
+        switch recognizer.state {
+        case .began:
+            var touchLocation = recognizer.location(in: recognizer.view)
+            touchLocation = self.convertPoint(fromView: touchLocation)
+            selectedNode = self.atPoint(touchLocation)
+        case .changed:
             var translation = recognizer.translation(in: recognizer.view!)
             translation = CGPoint(x: translation.x, y: -translation.y)
             panForTranslation(translation: translation)
             recognizer.setTranslation(CGPointZero, in: recognizer.view)
-            
-        } else if recognizer.state == .ended {
+        case .ended:
             let scrollDuration = 0.2
             let velocity = recognizer.velocity(in: recognizer.view)
             let position = background.position
@@ -83,6 +98,17 @@ class GameScene: SKScene {
             let moveTo = SKAction.move(to: newPosition, duration: scrollDuration)
             moveTo.timingMode = .easeOut
             background.run(moveTo)
+            isCanBeEdited = false
+        default:
+            break
+        }
+    }
+    
+    @objc func longGestureAction(_ recognizer: UILongPressGestureRecognizer) {
+        if recognizer.state == .began {
+            if let _ = selectedNode as? SKShapeNode {
+                isCanBeEdited = true
+            }
         }
     }
 }

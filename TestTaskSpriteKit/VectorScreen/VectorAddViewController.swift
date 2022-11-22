@@ -31,6 +31,7 @@ class VectorAddViewController: UIViewController {
         
         let sendDataButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonAction(_:)))
         navigationItem.rightBarButtonItem = sendDataButton
+        startXTextField.becomeFirstResponder()
     }
     
     //MARK: - private methods
