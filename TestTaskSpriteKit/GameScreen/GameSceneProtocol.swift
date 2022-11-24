@@ -10,5 +10,6 @@ import SpriteKit
 
 protocol GameSceneProtocol: AnyObject {
     func addArrow() -> SKShapeNode
+    func displayAllVectors(node: SKNode)
     var isDataReceived: Bool { get set }
 }

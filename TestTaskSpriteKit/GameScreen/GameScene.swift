@@ -36,6 +36,8 @@ class GameScene: SKScene {
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(longGestureAction(_:)))
         view.addGestureRecognizer(longGesture)
         longGesture.delegate = self
+        
+        gameSceneDelegate?.displayAllVectors(node: paperNode)
     }
     
     override func update(_ currentTime: TimeInterval) {

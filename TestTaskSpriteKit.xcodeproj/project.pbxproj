@@ -20,8 +20,12 @@
 		380598582924D8BF00BA4F16 /* UIBezierPath+addArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380598572924D8BF00BA4F16 /* UIBezierPath+addArrow.swift */; };
 		3805985A2924F22100BA4F16 /* VectorAddViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380598592924F22100BA4F16 /* VectorAddViewControllerDelegate.swift */; };
 		3867F954292818F100D5068C /* GameSceneProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F953292818F100D5068C /* GameSceneProtocol.swift */; };
-		3867F9562928260300D5068C /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F9552928260300D5068C /* Vector.swift */; };
 		3867F95829282AC800D5068C /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F95729282AC800D5068C /* CustomCell.swift */; };
+		3867F983292F7CDC00D5068C /* TestTaskSpriteKit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3867F981292F7CDC00D5068C /* TestTaskSpriteKit.xcdatamodeld */; };
+		3867F985292F9E9700D5068C /* SKShapeNode+addArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F984292F9E9700D5068C /* SKShapeNode+addArrow.swift */; };
+		3867F98B292FD24200D5068C /* SKShapeNodeValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F98A292FD24200D5068C /* SKShapeNodeValueTransformer.swift */; };
+		3867F98F2930101900D5068C /* Vector+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F98E2930101900D5068C /* Vector+CoreDataProperties.swift */; };
+		3867F9912930112800D5068C /* Vector+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F9902930112800D5068C /* Vector+CoreDataClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,8 +43,12 @@
 		380598572924D8BF00BA4F16 /* UIBezierPath+addArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+addArrow.swift"; sourceTree = "<group>"; };
 		380598592924F22100BA4F16 /* VectorAddViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorAddViewControllerDelegate.swift; sourceTree = "<group>"; };
 		3867F953292818F100D5068C /* GameSceneProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneProtocol.swift; sourceTree = "<group>"; };
-		3867F9552928260300D5068C /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		3867F95729282AC800D5068C /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		3867F982292F7CDC00D5068C /* TestTaskSpriteKit.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestTaskSpriteKit.xcdatamodel; sourceTree = "<group>"; };
+		3867F984292F9E9700D5068C /* SKShapeNode+addArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKShapeNode+addArrow.swift"; sourceTree = "<group>"; };
+		3867F98A292FD24200D5068C /* SKShapeNodeValueTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKShapeNodeValueTransformer.swift; sourceTree = "<group>"; };
+		3867F98E2930101900D5068C /* Vector+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vector+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3867F9902930112800D5068C /* Vector+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vector+CoreDataClass.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,10 +82,10 @@
 			isa = PBXGroup;
 			children = (
 				3805983C292103B900BA4F16 /* AppDelegate.swift */,
-				3867F95C2928401600D5068C /* Model */,
 				3867F95929283FCC00D5068C /* GameScreen */,
 				3867F95A29283FF000D5068C /* VectorScreen */,
 				3867F95B2928400800D5068C /* extensions */,
+				3867F9922930132000D5068C /* CoreData */,
 				3867F95D2928402800D5068C /* resourses */,
 			);
 			path = TestTaskSpriteKit;
@@ -109,16 +117,9 @@
 			children = (
 				380598552924332000BA4F16 /* UIColor+randomColor.swift */,
 				380598572924D8BF00BA4F16 /* UIBezierPath+addArrow.swift */,
+				3867F984292F9E9700D5068C /* SKShapeNode+addArrow.swift */,
 			);
 			path = extensions;
-			sourceTree = "<group>";
-		};
-		3867F95C2928401600D5068C /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				3867F9552928260300D5068C /* Vector.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		3867F95D2928402800D5068C /* resourses */ = {
@@ -130,6 +131,17 @@
 				3805984B292103BA00BA4F16 /* LaunchScreen.storyboard */,
 			);
 			path = resourses;
+			sourceTree = "<group>";
+		};
+		3867F9922930132000D5068C /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				3867F981292F7CDC00D5068C /* TestTaskSpriteKit.xcdatamodeld */,
+				3867F98A292FD24200D5068C /* SKShapeNodeValueTransformer.swift */,
+				3867F98E2930101900D5068C /* Vector+CoreDataProperties.swift */,
+				3867F9902930112800D5068C /* Vector+CoreDataClass.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,14 +219,18 @@
 			files = (
 				3805985A2924F22100BA4F16 /* VectorAddViewControllerDelegate.swift in Sources */,
 				38059843292103B900BA4F16 /* GameScene.swift in Sources */,
+				3867F9912930112800D5068C /* Vector+CoreDataClass.swift in Sources */,
+				3867F98F2930101900D5068C /* Vector+CoreDataProperties.swift in Sources */,
 				3867F95829282AC800D5068C /* CustomCell.swift in Sources */,
 				38059845292103B900BA4F16 /* GameViewController.swift in Sources */,
 				3805983D292103B900BA4F16 /* AppDelegate.swift in Sources */,
+				3867F98B292FD24200D5068C /* SKShapeNodeValueTransformer.swift in Sources */,
 				3867F954292818F100D5068C /* GameSceneProtocol.swift in Sources */,
 				380598582924D8BF00BA4F16 /* UIBezierPath+addArrow.swift in Sources */,
 				380598542923EED200BA4F16 /* VectorAddViewController.swift in Sources */,
-				3867F9562928260300D5068C /* Vector.swift in Sources */,
+				3867F985292F9E9700D5068C /* SKShapeNode+addArrow.swift in Sources */,
 				380598562924332000BA4F16 /* UIColor+randomColor.swift in Sources */,
+				3867F983292F7CDC00D5068C /* TestTaskSpriteKit.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +448,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3867F981292F7CDC00D5068C /* TestTaskSpriteKit.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3867F982292F7CDC00D5068C /* TestTaskSpriteKit.xcdatamodel */,
+			);
+			currentVersion = 3867F982292F7CDC00D5068C /* TestTaskSpriteKit.xcdatamodel */;
+			path = TestTaskSpriteKit.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 38059831292103B900BA4F16 /* Project object */;
 }

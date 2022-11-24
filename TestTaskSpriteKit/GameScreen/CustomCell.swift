@@ -36,8 +36,8 @@ class CustomCell: UITableViewCell {
     func bindText(vector: Vector) {
         let stringLenght = String(format: "%.2f", vector.lenght)
         label.text = """
-                      A (\(Int(vector.startPoint.x)); \(Int(vector.startPoint.y)))
-                      B (\(Int(vector.endPoint.x)); \(Int(vector.endPoint.y)))
+                      A (\(Int(vector.startPointX)); \(Int(vector.startPointY)))
+                      B (\(Int(vector.endPointX)); \(Int(vector.endPointY)))
                       Lenght = \(stringLenght)
                     """
     }

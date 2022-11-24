@@ -8,6 +8,7 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import CoreData
 
 class GameViewController: UIViewController {
     
@@ -21,7 +22,7 @@ class GameViewController: UIViewController {
     private var isTableViewShow: Bool = false
     var isDataReceived: Bool = false
     private var startX = 0, startY = 0, endX = 0, endY = 0
-    private var nodeName = 0
+    private var moc: NSManagedObjectContext?
     static let cellIdentifier = "cell"
     
     //MARK: - vc lifecycle
@@ -31,6 +32,8 @@ class GameViewController: UIViewController {
         
         if let view = self.view as! SKView? {
             if let scene = SKScene(fileNamed: "GameScene") as? GameScene {
+                moc = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
+                vectorsArray = (try? moc?.fetch(Vector.fetchRequest())) ?? []
                 scene.scaleMode = .aspectFill
                 scene.gameSceneDelegate = self
                 view.presentScene(scene)
@@ -77,10 +80,20 @@ class GameViewController: UIViewController {
         return arrowPath
     }
     
-    private func createVector(shapeNode: SKShapeNode) {
-        let vector = Vector(startPoint: CGPoint(x: startX, y: startY), endPoint: CGPoint(x: endX, y: endY), node: shapeNode, lenght: calculateVectorLength())
-        vectorsArray.append(vector)
-        tableView?.reloadData()
+    private func createVector(shapeNode: SKShapeNode) -> Vector? {
+        if let moc = moc {
+            let vector = Vector(context: moc)
+            vector.startPointX = Float(startX)
+            vector.startPointY = Float(startY)
+            vector.endPointX = Float(endX)
+            vector.endPointY = Float(endY)
+            vector.lenght = calculateVectorLength()
+            vector.node = shapeNode
+            vector.name = String(vectorsArray.count)
+            
+            return vector
+        }
+        return nil
     }
     
     private func calculateVectorLength() -> Double {
@@ -90,27 +103,27 @@ class GameViewController: UIViewController {
         return lenghtVector
     }
     
-    private func getShapeNode(_ indexPath: IndexPath) -> SKShapeNode? {
+    private func getVector(_ indexPath: IndexPath) -> Vector? {
         if vectorsArray.count > indexPath.row {
-            return vectorsArray[indexPath.row].node
+            return vectorsArray[indexPath.row]
         }
         return nil
     }
     
     private func highlightVector(indexPath: IndexPath) {
-        let arrow = getShapeNode(indexPath)
+        let arrow = getVector(indexPath)?.node as? SKShapeNode
         arrow?.lineWidth = 7
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
             arrow?.lineWidth = 5
+            self.tableView?.deselectRow(at: indexPath, animated: true)
         }
     }
     
-    private func deleteVector(indexPath: IndexPath, shapeNode: SKShapeNode) {
+    private func showDeleteVectorAlert(indexPath: IndexPath, vector: Vector) {
         let alert = UIAlertController(title: "Хотите удалить данный вектор?", message: "", preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
             guard let self = self else { return }
-            self.vectorsArray.removeAll(where: { $0.node == shapeNode })
-            shapeNode.removeFromParent()
+            self.deleteVector(vector: vector)
             self.tableView?.performBatchUpdates {
                 self.tableView?.deleteRows(at: [indexPath], with: .automatic)
             } completion: { _ in
@@ -121,6 +134,15 @@ class GameViewController: UIViewController {
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
         self.present(alert, animated: true)
+    }
+    
+    private func deleteVector(vector: Vector) {
+        if let shapeNode = vector.node as? SKShapeNode {
+            shapeNode.removeFromParent()
+        }
+        self.vectorsArray.removeAll(where: { $0 == vector })
+        self.moc?.delete(vector)
+        try? self.moc?.save()
     }
     
     //MARK: - actions
@@ -168,16 +190,24 @@ extension GameViewController: VectorAddViewControllerDelegate {
 extension GameViewController: GameSceneProtocol {
     
     func addArrow() -> SKShapeNode {
-        let arrow = SKShapeNode(path: createPathForVector().cgPath, centered: false)
-        arrow.position = CGPoint(x: 0, y: 0)
-        arrow.lineWidth = 5
-        arrow.strokeColor = .random
-        arrow.zPosition = 1
-        arrow.name = String(nodeName)
-        createVector(shapeNode: arrow)
-        nodeName += 1
+        let arrow = SKShapeNode().addArrow(path: createPathForVector())
+        if let vector = createVector(shapeNode: arrow) {
+            arrow.name = vector.name
+            vectorsArray.append(vector)
+            try? moc?.save()
+        }
+        
+        tableView?.reloadData()
         isDataReceived = false
         return arrow
+    }
+    
+    func displayAllVectors(node: SKNode) {
+        for i in vectorsArray {
+            if let shapeNode = i.node as? SKShapeNode {
+                node.addChild(shapeNode)
+            }
+        }
     }
 }
 
@@ -204,8 +234,8 @@ extension GameViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteCell = UIContextualAction(style: .destructive, title: "Удалить") { [weak self] _, _, close in
             guard let self = self else { return }
-            if let shapeNode = self.getShapeNode(indexPath) {
-                self.deleteVector(indexPath: indexPath, shapeNode: shapeNode)
+            if let vector = self.getVector(indexPath) {
+                self.showDeleteVectorAlert(indexPath: indexPath, vector: vector)
             }
         }
         return UISwipeActionsConfiguration(actions: [
