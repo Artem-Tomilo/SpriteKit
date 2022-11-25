@@ -9,7 +9,7 @@ import Foundation
 import SpriteKit
 
 protocol GameSceneProtocol: AnyObject {
-    func addArrow() -> SKShapeNode
+    func addArrow(path: UIBezierPath?) -> SKShapeNode
     func displayAllVectors(node: SKNode)
     var isDataReceived: Bool { get set }
 }

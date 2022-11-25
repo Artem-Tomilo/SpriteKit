@@ -189,12 +189,18 @@ extension GameViewController: VectorAddViewControllerDelegate {
 
 extension GameViewController: GameSceneProtocol {
     
-    func addArrow() -> SKShapeNode {
-        let arrow = SKShapeNode().addArrow(path: createPathForVector())
-        if let vector = createVector(shapeNode: arrow) {
-            arrow.name = vector.name
-            vectorsArray.append(vector)
-            try? moc?.save()
+    func addArrow(path: UIBezierPath?) -> SKShapeNode {
+        var arrow = SKShapeNode()
+        if let path = path {
+            arrow = SKShapeNode().addArrow(path: path)
+        } else {
+            let newPath = createPathForVector()
+            arrow = SKShapeNode().addArrow(path: newPath)
+            if let vector = createVector(shapeNode: arrow) {
+                arrow.name = vector.name
+                vectorsArray.append(vector)
+                try? moc?.save()
+            }
         }
         
         tableView?.reloadData()

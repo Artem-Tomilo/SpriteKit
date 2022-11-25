@@ -42,7 +42,7 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         if gameSceneDelegate?.isDataReceived == true {
-            if let arrow = gameSceneDelegate?.addArrow() {
+            if let arrow = gameSceneDelegate?.addArrow(path: nil) {
                 paperNode.addChild(arrow)
             }
         }
@@ -64,12 +64,29 @@ class GameScene: SKScene {
     private func panForTranslation(translation: CGPoint) {
         let backgroundPosition = background.position
         let selectedNodePosition = selectedNode?.position
-        
-        if selectedNode?.name != "paper" && isCanBeEdited == true {
+        if selectedNode?.name != "paper" {
             selectedNode?.position = CGPoint(x: selectedNodePosition!.x + translation.x, y: selectedNodePosition!.y + translation.y)
         } else {
             let newPosition = CGPoint(x: backgroundPosition.x + translation.x, y: backgroundPosition.y + translation.y)
             background.position = boundLayerPosition(newPosition: newPosition)
+        }
+    }
+    
+    private func updateVector(touchLocation: CGPoint) {
+        let path = UIBezierPath()
+        
+        if let selectedNode = selectedNode as? SKShapeNode,
+           let cgPath = selectedNode.path {
+            path.cgPath = cgPath
+            if path.bounds.minX <= touchLocation.x && path.bounds.minY <= touchLocation.y {
+                let newPath = UIBezierPath()
+                newPath.addArrow(start: CGPoint(x: (path.bounds.minX), y: (path.bounds.minY)), end: CGPoint(x: touchLocation.x, y: touchLocation.y))
+                let arrow = gameSceneDelegate?.addArrow(path: newPath)
+                arrow?.strokeColor = selectedNode.strokeColor
+                self.selectedNode?.removeFromParent()
+                self.selectedNode = arrow
+                paperNode.addChild(arrow!)
+            }
         }
     }
     
@@ -82,10 +99,12 @@ class GameScene: SKScene {
             touchLocation = self.convertPoint(fromView: touchLocation)
             selectedNode = self.atPoint(touchLocation)
         case .changed:
-            var translation = recognizer.translation(in: recognizer.view!)
-            translation = CGPoint(x: translation.x, y: -translation.y)
-            panForTranslation(translation: translation)
-            recognizer.setTranslation(CGPointZero, in: recognizer.view)
+            if !isCanBeEdited {
+                var translation = recognizer.translation(in: recognizer.view!)
+                translation = CGPoint(x: translation.x, y: -translation.y)
+                panForTranslation(translation: translation)
+                recognizer.setTranslation(CGPointZero, in: recognizer.view)
+            }
         case .ended:
             let scrollDuration = 0.2
             let velocity = recognizer.velocity(in: recognizer.view)
@@ -100,17 +119,29 @@ class GameScene: SKScene {
             let moveTo = SKAction.move(to: newPosition, duration: scrollDuration)
             moveTo.timingMode = .easeOut
             background.run(moveTo)
-            isCanBeEdited = false
         default:
             break
         }
     }
     
     @objc func longGestureAction(_ recognizer: UILongPressGestureRecognizer) {
-        if recognizer.state == .began {
+        switch recognizer.state {
+        case .began:
+            var touchLocation = recognizer.location(in: recognizer.view)
+            touchLocation = self.convertPoint(fromView: touchLocation)
+            selectedNode = self.atPoint(touchLocation)
             if let _ = selectedNode as? SKShapeNode {
+                print("You can edit the node")
                 isCanBeEdited = true
             }
+        case .changed:
+            var touchLocation = recognizer.location(in: recognizer.view)
+            touchLocation = self.convertPoint(fromView: touchLocation)
+            updateVector(touchLocation: touchLocation)
+        case .ended:
+            isCanBeEdited = false
+        default:
+            break
         }
     }
 }
