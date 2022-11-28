@@ -26,6 +26,13 @@
 		3867F98B292FD24200D5068C /* SKShapeNodeValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F98A292FD24200D5068C /* SKShapeNodeValueTransformer.swift */; };
 		3867F98F2930101900D5068C /* Vector+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F98E2930101900D5068C /* Vector+CoreDataProperties.swift */; };
 		3867F9912930112800D5068C /* Vector+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F9902930112800D5068C /* Vector+CoreDataClass.swift */; };
+		38EDCC922934F1CD00C76B2A /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 38EDCC8B2934F1CC00C76B2A /* 4.png */; };
+		38EDCC932934F1CD00C76B2A /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 38EDCC8C2934F1CD00C76B2A /* 5.png */; };
+		38EDCC942934F1CD00C76B2A /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 38EDCC8D2934F1CD00C76B2A /* 6.png */; };
+		38EDCC952934F1CD00C76B2A /* 7.png in Resources */ = {isa = PBXBuildFile; fileRef = 38EDCC8E2934F1CD00C76B2A /* 7.png */; };
+		38EDCC962934F1CD00C76B2A /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 38EDCC8F2934F1CD00C76B2A /* 3.png */; };
+		38EDCC972934F1CD00C76B2A /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 38EDCC902934F1CD00C76B2A /* 1.png */; };
+		38EDCC982934F1CD00C76B2A /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 38EDCC912934F1CD00C76B2A /* 2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +56,13 @@
 		3867F98A292FD24200D5068C /* SKShapeNodeValueTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKShapeNodeValueTransformer.swift; sourceTree = "<group>"; };
 		3867F98E2930101900D5068C /* Vector+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vector+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3867F9902930112800D5068C /* Vector+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vector+CoreDataClass.swift"; sourceTree = "<group>"; };
+		38EDCC8B2934F1CC00C76B2A /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
+		38EDCC8C2934F1CD00C76B2A /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
+		38EDCC8D2934F1CD00C76B2A /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
+		38EDCC8E2934F1CD00C76B2A /* 7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 7.png; sourceTree = "<group>"; };
+		38EDCC8F2934F1CD00C76B2A /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		38EDCC902934F1CD00C76B2A /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		38EDCC912934F1CD00C76B2A /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +100,7 @@
 				3867F95A29283FF000D5068C /* VectorScreen */,
 				3867F95B2928400800D5068C /* extensions */,
 				3867F9922930132000D5068C /* CoreData */,
+				38EDCC992934F1D500C76B2A /* screens */,
 				3867F95D2928402800D5068C /* resourses */,
 			);
 			path = TestTaskSpriteKit;
@@ -142,6 +157,20 @@
 				3867F9902930112800D5068C /* Vector+CoreDataClass.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		38EDCC992934F1D500C76B2A /* screens */ = {
+			isa = PBXGroup;
+			children = (
+				38EDCC902934F1CD00C76B2A /* 1.png */,
+				38EDCC912934F1CD00C76B2A /* 2.png */,
+				38EDCC8F2934F1CD00C76B2A /* 3.png */,
+				38EDCC8B2934F1CC00C76B2A /* 4.png */,
+				38EDCC8C2934F1CD00C76B2A /* 5.png */,
+				38EDCC8D2934F1CD00C76B2A /* 6.png */,
+				38EDCC8E2934F1CD00C76B2A /* 7.png */,
+			);
+			path = screens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,10 +231,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38EDCC972934F1CD00C76B2A /* 1.png in Resources */,
+				38EDCC952934F1CD00C76B2A /* 7.png in Resources */,
+				38EDCC922934F1CD00C76B2A /* 4.png in Resources */,
 				38059848292103B900BA4F16 /* Main.storyboard in Resources */,
 				3805983F292103B900BA4F16 /* GameScene.sks in Resources */,
 				3805984A292103BA00BA4F16 /* Assets.xcassets in Resources */,
+				38EDCC982934F1CD00C76B2A /* 2.png in Resources */,
+				38EDCC962934F1CD00C76B2A /* 3.png in Resources */,
+				38EDCC932934F1CD00C76B2A /* 5.png in Resources */,
 				3805984D292103BA00BA4F16 /* LaunchScreen.storyboard in Resources */,
+				38EDCC942934F1CD00C76B2A /* 6.png in Resources */,
 				38059841292103B900BA4F16 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
