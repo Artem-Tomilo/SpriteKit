@@ -8,7 +8,7 @@
 import Foundation
 import SpriteKit
 
-protocol GameSceneProtocol: AnyObject {
+protocol GameSceneDelegate: AnyObject {
     func addArrow(path: UIBezierPath?) -> SKShapeNode
     func displayAllVectors(node: SKNode)
     func updateVector(node: SKShapeNode)

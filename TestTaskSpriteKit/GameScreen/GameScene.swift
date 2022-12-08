@@ -12,7 +12,7 @@ class GameScene: SKScene {
     
     //MARK: - property
     
-    weak var gameSceneDelegate: GameSceneProtocol?
+    weak var gameSceneDelegate: GameSceneDelegate?
     
     private var background = SKNode()
     private var paperNode = SKSpriteNode()
@@ -118,7 +118,6 @@ class GameScene: SKScene {
         case .ended:
             if let selectedNode = self.selectedNode as? SKShapeNode {
                 gameSceneDelegate?.updateVector(node: selectedNode)
-                print(selectedNode.frame.maxX - selectedNode.frame.midX)
             }
             
             let scrollDuration = 0.2

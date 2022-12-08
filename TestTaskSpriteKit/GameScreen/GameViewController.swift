@@ -172,7 +172,7 @@ class GameViewController: UIViewController {
     }
 }
 
-//MARK: - vectorAddViewControllerDelegate
+//MARK: - VectorAddViewControllerDelegate
 
 extension GameViewController: VectorAddViewControllerDelegate {
     func parametersBind(startX: Int, startY: Int, endX: Int, endY: Int) {
@@ -185,9 +185,9 @@ extension GameViewController: VectorAddViewControllerDelegate {
     }
 }
 
-//MARK: - gameSceneProtocol
+//MARK: - GameSceneDelegate
 
-extension GameViewController: GameSceneProtocol {
+extension GameViewController: GameSceneDelegate {
     
     func addArrow(path: UIBezierPath?) -> SKShapeNode {
         var arrow = SKShapeNode()

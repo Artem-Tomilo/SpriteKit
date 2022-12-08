@@ -19,7 +19,7 @@
 		380598562924332000BA4F16 /* UIColor+randomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380598552924332000BA4F16 /* UIColor+randomColor.swift */; };
 		380598582924D8BF00BA4F16 /* UIBezierPath+addArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380598572924D8BF00BA4F16 /* UIBezierPath+addArrow.swift */; };
 		3805985A2924F22100BA4F16 /* VectorAddViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380598592924F22100BA4F16 /* VectorAddViewControllerDelegate.swift */; };
-		3867F954292818F100D5068C /* GameSceneProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F953292818F100D5068C /* GameSceneProtocol.swift */; };
+		3867F954292818F100D5068C /* GameSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F953292818F100D5068C /* GameSceneDelegate.swift */; };
 		3867F95829282AC800D5068C /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F95729282AC800D5068C /* CustomCell.swift */; };
 		3867F983292F7CDC00D5068C /* TestTaskSpriteKit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3867F981292F7CDC00D5068C /* TestTaskSpriteKit.xcdatamodeld */; };
 		3867F985292F9E9700D5068C /* SKShapeNode+addArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3867F984292F9E9700D5068C /* SKShapeNode+addArrow.swift */; };
@@ -49,7 +49,7 @@
 		380598552924332000BA4F16 /* UIColor+randomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+randomColor.swift"; sourceTree = "<group>"; };
 		380598572924D8BF00BA4F16 /* UIBezierPath+addArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+addArrow.swift"; sourceTree = "<group>"; };
 		380598592924F22100BA4F16 /* VectorAddViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorAddViewControllerDelegate.swift; sourceTree = "<group>"; };
-		3867F953292818F100D5068C /* GameSceneProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneProtocol.swift; sourceTree = "<group>"; };
+		3867F953292818F100D5068C /* GameSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneDelegate.swift; sourceTree = "<group>"; };
 		3867F95729282AC800D5068C /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		3867F982292F7CDC00D5068C /* TestTaskSpriteKit.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestTaskSpriteKit.xcdatamodel; sourceTree = "<group>"; };
 		3867F984292F9E9700D5068C /* SKShapeNode+addArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKShapeNode+addArrow.swift"; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 			children = (
 				38059844292103B900BA4F16 /* GameViewController.swift */,
 				38059842292103B900BA4F16 /* GameScene.swift */,
-				3867F953292818F100D5068C /* GameSceneProtocol.swift */,
+				3867F953292818F100D5068C /* GameSceneDelegate.swift */,
 				3867F95729282AC800D5068C /* CustomCell.swift */,
 				3805983E292103B900BA4F16 /* GameScene.sks */,
 			);
@@ -261,7 +261,7 @@
 				38059845292103B900BA4F16 /* GameViewController.swift in Sources */,
 				3805983D292103B900BA4F16 /* AppDelegate.swift in Sources */,
 				3867F98B292FD24200D5068C /* SKShapeNodeValueTransformer.swift in Sources */,
-				3867F954292818F100D5068C /* GameSceneProtocol.swift in Sources */,
+				3867F954292818F100D5068C /* GameSceneDelegate.swift in Sources */,
 				380598582924D8BF00BA4F16 /* UIBezierPath+addArrow.swift in Sources */,
 				380598542923EED200BA4F16 /* VectorAddViewController.swift in Sources */,
 				3867F985292F9E9700D5068C /* SKShapeNode+addArrow.swift in Sources */,
