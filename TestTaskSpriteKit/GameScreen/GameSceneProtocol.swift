@@ -11,5 +11,6 @@ import SpriteKit
 protocol GameSceneProtocol: AnyObject {
     func addArrow(path: UIBezierPath?) -> SKShapeNode
     func displayAllVectors(node: SKNode)
+    func updateVector(node: SKShapeNode)
     var isDataReceived: Bool { get set }
 }

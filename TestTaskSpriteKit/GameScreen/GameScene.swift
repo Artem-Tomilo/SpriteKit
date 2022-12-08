@@ -19,6 +19,9 @@ class GameScene: SKScene {
     private var selectedNode: SKNode?
     private var isCanBeEdited = false
     
+    private var touchX: CGFloat = 0
+    private var touchY: CGFloat = 0
+    
     //MARK: - scene methods
     
     override func didMove(to view: SKView) {
@@ -61,11 +64,10 @@ class GameScene: SKScene {
         return returnValue
     }
     
-    private func panForTranslation(translation: CGPoint) {
+    private func panForTranslation(translation: CGPoint, location: CGPoint) {
         let backgroundPosition = background.position
-        let selectedNodePosition = selectedNode?.position
         if selectedNode?.name != "paper" {
-            selectedNode?.position = CGPoint(x: selectedNodePosition!.x + translation.x, y: selectedNodePosition!.y + translation.y)
+            selectedNode?.position = CGPoint(x: location.x - touchX, y: location.y - touchY)
         } else {
             let newPosition = CGPoint(x: backgroundPosition.x + translation.x, y: backgroundPosition.y + translation.y)
             background.position = boundLayerPosition(newPosition: newPosition)
@@ -93,19 +95,32 @@ class GameScene: SKScene {
     //MARK: - actions
     
     @objc func panGestureAction(_ recognizer : UIPanGestureRecognizer) {
+        var touchLocation = recognizer.location(in: recognizer.view)
+        var translation = recognizer.translation(in: recognizer.view)
+        
         switch recognizer.state {
         case .began:
-            var touchLocation = recognizer.location(in: recognizer.view)
+            touchLocation = recognizer.location(in: recognizer.view)
             touchLocation = self.convertPoint(fromView: touchLocation)
             selectedNode = self.atPoint(touchLocation)
+            
+            if let selectedNode {
+                touchX = touchLocation.x - selectedNode.position.x
+                touchY = touchLocation.y - selectedNode.position.y
+            }
         case .changed:
             if !isCanBeEdited {
-                var translation = recognizer.translation(in: recognizer.view!)
+                touchLocation = self.convertPoint(fromView: touchLocation)
                 translation = CGPoint(x: translation.x, y: -translation.y)
-                panForTranslation(translation: translation)
+                panForTranslation(translation: translation, location: touchLocation)
                 recognizer.setTranslation(CGPointZero, in: recognizer.view)
             }
         case .ended:
+            if let selectedNode = self.selectedNode as? SKShapeNode {
+                gameSceneDelegate?.updateVector(node: selectedNode)
+                print(selectedNode.frame.maxX - selectedNode.frame.midX)
+            }
+            
             let scrollDuration = 0.2
             let velocity = recognizer.velocity(in: recognizer.view)
             let position = background.position

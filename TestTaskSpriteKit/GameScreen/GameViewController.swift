@@ -87,7 +87,7 @@ class GameViewController: UIViewController {
             vector.startPointY = Float(startY)
             vector.endPointX = Float(endX)
             vector.endPointY = Float(endY)
-            vector.lenght = calculateVectorLength()
+            vector.lenght = calculateVectorLength(vector: vector)
             vector.node = shapeNode
             vector.name = String(vectorsArray.count)
             
@@ -96,9 +96,9 @@ class GameViewController: UIViewController {
         return nil
     }
     
-    private func calculateVectorLength() -> Double {
-        let coordinateX = Double(endX - startX)
-        let coordinateY = Double(endY - startY)
+    private func calculateVectorLength(vector: Vector) -> Double {
+        let coordinateX = Double(vector.endPointX - vector.startPointX)
+        let coordinateY = Double(vector.endPointY - vector.startPointY)
         let lenghtVector = sqrt(coordinateX * coordinateX + coordinateY * coordinateY)
         return lenghtVector
     }
@@ -212,6 +212,26 @@ extension GameViewController: GameSceneProtocol {
         for i in vectorsArray {
             if let shapeNode = i.node as? SKShapeNode {
                 node.addChild(shapeNode)
+            }
+        }
+    }
+    
+    func updateVector(node: SKShapeNode) {
+        for i in vectorsArray {
+            if node == i.node as? SKShapeNode,
+               let index = self.vectorsArray.firstIndex(of: i)  {
+                self.moc?.delete(i)
+                startX = Int(Float(node.frame.minX))
+                startY = Int(node.frame.minY)
+                endX = Int(node.frame.maxX)
+                endY = Int(node.frame.maxY)
+                
+                if let newVector = createVector(shapeNode: node) {
+                    self.vectorsArray.removeAll(where: { $0.node == node })
+                    self.vectorsArray.insert(newVector, at: index)
+                    try? self.moc?.save()
+                    tableView?.reloadData()
+                }
             }
         }
     }
